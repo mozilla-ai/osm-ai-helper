@@ -1,4 +1,4 @@
-site_name: Guidance Docs
+site_name: Open Street Map AI Helper
 repo_url: https://github.com/mozilla-ai/osm-ai-helper
 repo_name: osm-ai-helper
 
@@ -39,6 +39,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 
 plugins:
 - search
