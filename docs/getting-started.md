@@ -1,10 +1,10 @@
-Get started with Open Street Map AI Helper using one of the options below:
+Get started with OpenStreetMap AI Helper using one of the options below:
 
 ## Setup options
 
 === "☁️ Google Colab (GPU)"
 
-    Get started right away finding swimming pools and contributing them to Open Street Map:
+    Get started right away finding swimming pools and contributing them to OpenStreetMap:
 
     | Find Swimming Pools |
     | ------------------- |

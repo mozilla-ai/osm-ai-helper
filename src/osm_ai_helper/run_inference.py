@@ -31,7 +31,7 @@ from osm_ai_helper.utils.tiles import group_elements_by_tile
 
 @logger.catch(reraise=True)
 def run_inference(
-    model_file: str,
+    yolo_model_file: str,
     output_dir: str,
     lat_lon: Tuple[float, float],
     margin: int = 1,
@@ -39,7 +39,27 @@ def run_inference(
     selector: str = "leisure=swimming_pool",
     zoom: int = 18,
 ):
-    bbox_predictor = YOLO(model_file)
+    """
+    Run inference on a given location.
+
+    Args:
+        yolo_model_file (str): Path to the [YOLO](https://docs.ultralytics.com/tasks/detect/) model file.
+        output_dir (str): Output directory.
+            The images and annotations will be saved in this directory.
+            The images will be saved as PNG files and the annotations as JSON files.
+            The names of the files will be in the format `{zoom}_{tile_col}_{tile_row}`.
+        lat_lon (Tuple[float, float]): Latitude and longitude of the location.
+        margin (int, optional): Number of tiles around the location.
+            Defaults to 1.
+        sam_model (str, optional): [SAM2](https://github.com/facebookresearch/sam2) model to use.
+            Defaults to "facebook/sam2-hiera-small".
+        selector (str, optional): OpenStreetMap selector.
+            Defaults to "leisure=swimming_pool".
+        zoom (int, optional): Zoom level.
+            Defaults to 18.
+            See https://docs.mapbox.com/help/glossary/zoom-level/.
+    """
+    bbox_predictor = YOLO(yolo_model_file)
     sam_predictor = SAM2ImagePredictor.from_pretrained(
         sam_model, device="cuda" if torch.cuda.is_available() else "cpu"
     )

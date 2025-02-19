@@ -1,4 +1,4 @@
-# **Open Street Map AI Helper Blueprint**
+# **OpenStreetMap AI Helper Blueprint**
 
 Blueprints are customizable workflows that help developers build AI applications using open-source tools and models
 

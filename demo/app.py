@@ -97,7 +97,7 @@ def upload_results(output_path):
         )
 
 
-st.title("Open Street Map AI Helper")
+st.title("OpenStreetMap AI Helper")
 
 st.divider()
 

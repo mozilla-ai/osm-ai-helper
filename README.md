@@ -9,7 +9,7 @@
   </picture>
 </p>
 
-# OSM-AI-helper: a Blueprint by Mozilla.ai for contributing to Open Street Map with the help of AI
+# OSM-AI-helper: a Blueprint by Mozilla.ai for contributing to OpenStreetMap with the help of AI
 
 [![](https://dcbadge.limes.pink/api/server/YuMNeuKStr?style=flat)](https://discord.gg/YuMNeuKStr)
 [![Docs](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/docs.yaml/badge.svg)](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/docs.yaml/)
@@ -29,7 +29,7 @@
 
 ## Quick-start
 
-Get started right away finding swimming pools and contributing them to Open Street Map:
+Get started right away finding swimming pools and contributing them to OpenStreetMap:
 
 | Find Swimming Pools |
 | ------------------- |

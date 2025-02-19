@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
 from loguru import logger
+from sam2.sam2_image_predictor import SAM2ImagePredictor
 from shapely import Polygon, box
+from ultralytics import YOLO
 
 from osm_ai_helper.utils.coordinates import (
     TILE_SIZE,
@@ -34,6 +36,22 @@ def grouped_elements_to_mask(group, zoom, tile_col, tile_row):
 
 
 def download_stacked_image_and_mask(bbox, grouped_elements, zoom, token):
+    """Download all tiles within a bounding box and stack them into a single image.
+
+    All the grouped_elements are painted on the mask.
+
+    Args:
+        bbox (tuple): Bounding box in the form of (south, west, north, east).
+        grouped_elements (dict): OpenStreetMap elements grouped with
+            [group_elements_by_tile][osm_ai_helper.utils.tiles.group_elements_by_tile].
+        zoom (int): Zoom level.
+            See https://docs.mapbox.com/help/glossary/zoom-level/.
+        token (str): Mapbox token.
+            See https://docs.mapbox.com/help/getting-started/access-tokens/.
+
+    Returns:
+        tuple: Stacked image and mask.
+    """
     south, west, north, east = bbox
     left, top = lat_lon_to_tile_col_row(north, west, zoom)
     right, bottom = lat_lon_to_tile_col_row(south, east, zoom)
@@ -83,8 +101,26 @@ def yield_tile_corners(stacked_image: np.ndarray, tile_size: int, overlap: float
 
 
 def tile_prediction(
-    bbox_predictor, sam_predictor, image: np.ndarray, overlap: float = 0.125
-):
+    bbox_predictor: YOLO,
+    sam_predictor: SAM2ImagePredictor,
+    image: np.ndarray,
+    overlap: float = 0.125,
+) -> np.ndarray:
+    """
+    Predict on a large image by splitting it into tiles.
+
+    Args:
+        bbox_predictor (YOLO): YOLO bounding box.
+            See https://docs.ultralytics.com/tasks/detect/.
+        sam_predictor (SAM2ImagePredictor): Segment Anything Image Predictor.
+            See https://github.com/facebookresearch/sam2?tab=readme-ov-file#image-prediction.
+        image (np.ndarray): Image to predict on.
+        overlap (float): Overlap between tiles.
+            Defaults to 0.125.
+
+    Returns:
+        np.ndarray: Stacked output.
+    """
     stacked_output = np.zeros((image.shape[0], image.shape[1]), dtype=np.uint8)
     for top, left, bottom, right in yield_tile_corners(image, TILE_SIZE, overlap):
         logger.debug(f"Predicting {(top, left, bottom, right)}")
