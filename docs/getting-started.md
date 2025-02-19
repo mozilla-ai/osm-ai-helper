@@ -20,7 +20,7 @@ Get started with OpenStreetMap AI Helper using one of the options below:
 
     Click the button below to launch the project directly in GitHub Codespaces:
 
-    <p align="center"><a href="https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb"><img src="https://github.com/codespaces/badge.svg" /></a></p>
+    <p align="center"><a href="https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=928839264&skip_quickstart=true&machine=standardLinux32gb"><img src="https://github.com/codespaces/badge.svg" /></a></p>
 
     Once the Codespaces environment launches, inside the terminal, start the Streamlit demo by running:
 

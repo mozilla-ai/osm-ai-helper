@@ -31,9 +31,9 @@
 
 Get started right away finding swimming pools and contributing them to OpenStreetMap:
 
-| Find Swimming Pools |
-| ------------------- |
-| [![Run Inference](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference.ipynb)
+| Google Colab | HuggingFace Spaces  | GitHub Codespaces |
+| -------------| ------------------- | ----------------- |
+| [![Run Inference](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference.ipynb) | [![Try on Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Try%20on-Spaces-blue)](https://huggingface.co/spaces/mozilla-ai/osm-ai-helper) | [![Try on Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=928839264&skip_quickstart=true&machine=standardLinux32gb) |
 
 You can also create your own dataset and finetune a new model for a different use case:
 
