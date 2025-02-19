@@ -37,7 +37,7 @@ All the predictions are aggregated into a single `stacked output mask`.
 All the individual mask blobs are converted to polygons for both the `stacked output mask` and the `ground truth mask`.
 Based on overlap, all the polygons are categorized into `existing`, `new` or `missed`.
 
-## **(Optional) Step 4: Review, filter and upload the `new` polygons to OpenStreetMap**
+## **Step 4: Review, filter and upload the `new` polygons to OpenStreetMap**
 
 The `new` polygons can be manually reviewed, filtered, and then uploaded to OpenStreetMap using [`upload_osm`](api.md/#osm_ai_helper.upload_osm.upload_osm).
 
