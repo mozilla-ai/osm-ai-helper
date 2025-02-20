@@ -35,7 +35,12 @@ def grouped_elements_to_mask(group, zoom, tile_col, tile_row):
     return mask
 
 
-def download_stacked_image_and_mask(bbox, grouped_elements, zoom, token):
+def download_stacked_image_and_mask(
+    bbox: tuple[float, float, float, float],
+    grouped_elements: dict,
+    zoom: int,
+    mapbox_token: str,
+) -> tuple[np.ndarray, np.ndarray]:
     """Download all tiles within a bounding box and stack them into a single image.
 
     All the grouped_elements are painted on the mask.
@@ -46,7 +51,7 @@ def download_stacked_image_and_mask(bbox, grouped_elements, zoom, token):
             [group_elements_by_tile][osm_ai_helper.utils.tiles.group_elements_by_tile].
         zoom (int): Zoom level.
             See https://docs.mapbox.com/help/glossary/zoom-level/.
-        token (str): Mapbox token.
+        mapbox_token (str): Mapbox token.
             See https://docs.mapbox.com/help/getting-started/access-tokens/.
 
     Returns:
@@ -67,7 +72,7 @@ def download_stacked_image_and_mask(bbox, grouped_elements, zoom, token):
         for n_row, tile_row in enumerate(range(top, bottom)):
             group = grouped_elements[(tile_col, tile_row)]
 
-            img = download_tile(zoom, tile_col, tile_row, token)
+            img = download_tile(zoom, tile_col, tile_row, mapbox_token)
 
             mask = grouped_elements_to_mask(group, zoom, tile_col, tile_row)
 

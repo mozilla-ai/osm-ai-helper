@@ -2,7 +2,7 @@
 
 Blueprints are customizable workflows that help developers build AI applications using open-source tools and models
 
-These docs are your companion to mastering the **OSM-AI-Helper Blueprint**.
+These docs are your companion to mastering the **OpenStreetMap AI Helper Blueprint**.
 
 ### Built with
 - Python 3.10+
