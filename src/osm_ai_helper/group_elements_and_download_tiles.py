@@ -16,7 +16,7 @@ def group_elements_and_download_tiles(
 
     Args:
         elements_file (str): Path to the JSON file containing OSM elements.
-            See [download_osm](osm_ai_helper.download_osm.download_osm).
+            See [download_osm][osm_ai_helper.download_osm.download_osm].
         output_dir (str): Output directory.
             The images and annotations will be saved in this directory.
             The images will be saved as JPEG files and the annotations as JSON files.
