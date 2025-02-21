@@ -34,12 +34,15 @@ For each tile, we run the trained [YOLO detector](https://docs.ultralytics.com/t
 
 If an object of interest is detected, we pass the bounding box to the provided [SAM2 model](https://github.com/facebookresearch/sam2) to obtain a segmentation mask.
 
+![Input YOLO SAM2](./images/input-yolo-sam2.png)
+
 All the predictions are aggregated into a single `stacked output mask`.
 
 ## **Step 3: Find existing, new and missed polygons**
 
 All the individual mask blobs are converted to polygons for both the `stacked output mask` and the `ground truth mask`.
-Based on overlap, all the polygons are categorized into `existing`, `new` or `missed`.
+Based on overlap, all the polygons are categorized into `existing` (green), `new` (yellow) or `missed` (red).
+
 
 ## **Step 4: Review, filter and upload the `new` polygons to OpenStreetMap**
 
