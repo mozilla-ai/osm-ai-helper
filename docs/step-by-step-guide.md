@@ -15,16 +15,20 @@ The inference has 4 core stages:
 
 ## **Step 1: Pick a point in the map and download data around it**
 
+![Lat Lon Point](./images/lat-lon-point.png)
+
 After a point is selected, a bounding box is computed around it based on the `margin` argument.
 
 All the existing elements of interest are downloaded from [OpenStreetMap](https://www.openstreetmap.org) using [`get_elements`](api.md/#osm_ai_helper.utils.osm.get_elements).
 
-All the tiles are downloaded from [MapBox](https://www.mapbox.com/) using [`download_stacked_image_and_mask`](api.md/#osm_ai_helper.utils.inference.download_stacked_image_and_mask). The elements are grouped and converted to a `ground truth mask` for later usage.
+All the tiles are downloaded from [MapBox](https://www.mapbox.com/) and joined to create a `stacked image` using [`download_stacked_image_and_mask`](api.md/#osm_ai_helper.utils.inference.download_stacked_image_and_mask). The elements are grouped and converted to a `ground truth mask` for later usage.
+
+![Stacked Image](./images/stacked-image.png)
 
 
 ## **Step 2: Run inference on the stacked image**
 
-The stacked image is divided into tiles to run inference using [`tile_prediction`](api.md/#osm_ai_helper.utils.inference.tile_prediction) .
+The stacked image is divided into tiles to run inference using [`tile_prediction`](api.md/#osm_ai_helper.utils.inference.tile_prediction).
 
 For each tile, we run the trained [YOLO detector](https://docs.ultralytics.com/tasks/detect/).
 
@@ -39,7 +43,13 @@ Based on overlap, all the polygons are categorized into `existing`, `new` or `mi
 
 ## **Step 4: Review, filter and upload the `new` polygons to OpenStreetMap**
 
-The `new` polygons can be manually reviewed, filtered, and then uploaded to OpenStreetMap using [`upload_osm`](api.md/#osm_ai_helper.upload_osm.upload_osm).
+The `new` polygons can be manually reviewed and filtered:
+
+![Filter Polygons](./images/filter-polygons.png)
+
+The ones you chose to `keep` will be uploaded to OpenStreetMap using [`upload_osm`](api.md/#osm_ai_helper.upload_osm.upload_osm):
+
+![Polygon Uploaded](./images/polygon-uploaded.png)
 
 ## 🎨 **Customizing the Blueprint**
 

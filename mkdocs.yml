@@ -5,8 +5,8 @@ repo_name: osm-ai-helper
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
-  - Authorization: authorization.md
   - Step-by-Step Guide: step-by-step-guide.md
+  - Authorization: authorization.md
   - Customization: customization.md
   - API Reference: api.md
   - Future Features & Contributions: future-features-contributions.md
