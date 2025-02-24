@@ -5,9 +5,8 @@ Blueprints are customizable workflows that help developers build AI applications
 These docs are your companion to mastering the **OpenStreetMap AI Helper Blueprint**.
 
 ### Built with
-- Python 3.10+
-- [Ultralytics](https://github.com/ultralytics/ultralytics)
-- [SAM 2](https://github.com/facebookresearch/sam2)
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue) [![Ultralytics](https://img.shields.io/badge/Ultralytics-008080?logo=ultralytics&logoColor=white)](https://ultralytics.com/) [![SAM 2](https://img.shields.io/badge/SAM%202-0099FF?logo=meta&logoColor=white)](https://segment-anything.com/)
 
 ---
 
