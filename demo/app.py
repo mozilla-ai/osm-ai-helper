@@ -4,6 +4,8 @@ from shutil import move
 
 import folium
 import streamlit as st
+from branca.element import MacroElement
+from jinja2 import Template
 from loguru import logger
 from huggingface_hub import hf_hub_download
 from PIL import Image
@@ -25,6 +27,34 @@ class StreamlitHandler:
 
 
 @st.fragment
+def show_map():
+    class LatLngPopup(MacroElement):
+        _template = Template(
+            """
+                {% macro script(this, kwargs) %}
+                    var {{this.get_name()}} = L.popup();
+                    function latLngPop(e) {
+                        {{this.get_name()}}
+                            .setLatLng(e.latlng)
+                            .setContent(e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4))
+                            .openOn({{this._parent.get_name()}});
+                        }
+                    {{this._parent.get_name()}}.on('click', latLngPop);
+                {% endmacro %}
+                """
+        )
+
+        def __init__(self):
+            super().__init__()
+            self._name = "LatLngPopup"
+
+    m = folium.Map(location=[42.2489, -8.5117], zoom_start=11, tiles="OpenStreetMap")
+    m.add_child(LatLngPopup())
+
+    st_folium(m, height=400, width=800)
+
+
+@st.fragment
 def inference(lat_lon, margin):
     with st.spinner("Downloading model..."):
         hf_hub_download(
@@ -35,7 +65,7 @@ def inference(lat_lon, margin):
         )
     with st.spinner("Running inference..."):
         output_path, existing, new, missed = run_inference(
-            model_file="models/model.pt",
+            yolo_model_file="models/model.pt",
             output_dir="results",
             lat_lon=lat_lon,
             margin=margin,
@@ -103,25 +133,26 @@ st.divider()
 
 st.subheader("Click on the map to select a latitude and longitude")
 
-m = folium.Map(location=[42.2489, -8.5117], zoom_start=11, tiles="OpenStreetMap")
+show_map()
 
-st_data = st_folium(m, width=725)
+lat_lon = st.text_input("Paste the copied (latitude, longitude)")
 
-if st_data.get("last_clicked"):
-    lat = st_data["last_clicked"]["lat"]
-    lon = st_data["last_clicked"]["lng"]
-    st.write(f"Last Clicked: {lat}, {lon}")
+if st.button("Run Inference") and lat_lon:
+    logger.add(StreamlitHandler(), format="<level>{message}</level>")
 
-    if st.button("Run Inference"):
-        streamlit_handler = StreamlitHandler()
-        logger.add(streamlit_handler, format="<level>{message}</level>")
+    lat, lon = lat_lon.split(",")
+    output_path, new = inference(
+        lat_lon=(float(lat.strip()), float(lon.strip())), margin=3
+    )
 
-        output_path, new = inference(lat_lon=(lat, lon), margin=3)
+    if new:
+        st.divider()
+        st.header("Review `new` polygons")
+        for new in Path(output_path).glob("*.json"):
+            handle_polygon(new)
 
-        if new:
-            st.divider()
-            st.header("Review `new` polygons")
-            for new in Path(output_path).glob("*.json"):
-                handle_polygon(new)
+        logger.add(StreamlitHandler(), format="<level>{message}</level>")
 
-            upload_results(output_path)
+        upload_results(output_path)
+    else:
+        st.warning("No `new` polygons were found. Try a different location.")
