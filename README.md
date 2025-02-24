@@ -16,6 +16,8 @@
 [![Tests](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/tests.yaml/badge.svg)](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/tests.yaml/)
 [![Ruff](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/lint.yaml/badge.svg?label=Ruff)](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/lint.yaml/)
 
+<img src="./images/osm-ai-helper-diagram.png" width="800" alt="osm-ai-helper Diagram" />
+
 📘 To explore this project further and discover other Blueprints, visit the [**Blueprints Hub**](https://developer-hub.mozilla.ai/).
 
 👉 📖 For more detailed guidance on using this project, please visit our [**Docs here**](https://mozilla-ai.github.io/osm-ai-helper/)
