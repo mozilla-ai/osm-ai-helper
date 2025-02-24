@@ -41,8 +41,10 @@ All the predictions are aggregated into a single `stacked output mask`.
 ## **Step 3: Find existing, new and missed polygons**
 
 All the individual mask blobs are converted to polygons for both the `stacked output mask` and the `ground truth mask`.
-Based on overlap, all the polygons are categorized into `existing` (green), `new` (yellow) or `missed` (red).
 
+Based on overlap, all the polygons are categorized into `existing` (green), `new` (yellow) or `missed` (red).
+The really relevant ones are the `new` (yellow), the others just serve as reference on how the model behaves
+for polygons already existing in OpenStreetMap.
 
 ## **Step 4: Review, filter and upload the `new` polygons to OpenStreetMap**
 
