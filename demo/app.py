@@ -148,6 +148,13 @@ if st.button("Run Inference") and lat_lon:
     if new:
         st.divider()
         st.header("Review `new` polygons")
+        st.markdown(
+            "Every `new` polygon will be displayed at the center of the image in `yellow`."
+        )
+        st.markdown(
+            "Polygons in other colors are those already existing in OpenStreetMap and they just "
+            "indicate whether the model has found them (`green`) or missed them (`red`)."
+        )
         for new in Path(output_path).glob("*.json"):
             handle_polygon(new)
 
