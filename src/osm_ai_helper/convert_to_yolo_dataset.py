@@ -56,11 +56,12 @@ def grouped_elements_to_annotation(
 def convert_to_yolo_dataset(
     input_dir: str,
 ):
-    """
-    Convert the output of `create_tile_dataset.py` to the YOLO format.
-    Join all the `area` folders into a single folder.
-    Convert the elements in the `.json` annotation files to `.txt` annotation files.
-    Split the dataset into train and test using the `split` key in the annotation files.
+    """Convert the output of `group_elements_and_download_tiles.py` to the [YOLO format](https://docs.ultralytics.com/datasets/detect/).
+
+    Args:
+        input_dir (str): Input directory containing the images and annotations.
+            The images are expected to be in the format `zoom_tile_col_tile_row.jpg`.
+            The annotations are expected to be in the format `zoom_tile_col_tile_row.json`.
     """
     input_path = Path(input_dir)
 

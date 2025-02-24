@@ -20,11 +20,13 @@ def download_osm(
     Args:
         output_dir (str): Output directory.
         selector (str): OSM tag to select elements.
+            Uses the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API/Language_Guide).
 
             Example: ["leisure=swimming_pool"](https://wiki.openstreetmap.org/wiki/Tag:leisure%3Dswimming_pool)
 
         area (str): Name of area to download.
             Can be city, state, country, etc.
+            Uses the [Nominatim API](https://nominatim.org/release-docs/develop/api/Search/).
 
         discard (Optional[dict[str, str]], optional): Discard elements matching
             any of the given tags.
