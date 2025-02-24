@@ -52,7 +52,11 @@ The `new` polygons can be manually reviewed and filtered:
 
 ![Filter Polygons](./images/filter-polygons.png)
 
-The ones you chose to `keep` will be uploaded to OpenStreetMap using [`upload_osm`](api.md/#osm_ai_helper.upload_osm.upload_osm):
+The ones you chose to `keep` will be uploaded to OpenStreetMap using [`upload_osm`](api.md/#osm_ai_helper.upload_osm.upload_osm).
+
+!!! warning
+
+    Once uploaded, the changes will be added to OpenStreetMap, so ensure you're confident about the ones you've kept.
 
 ![Polygon Uploaded](./images/polygon-uploaded.png)
 
