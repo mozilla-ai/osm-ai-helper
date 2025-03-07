@@ -1,19 +1,63 @@
-import cv2
+from typing import TYPE_CHECKING
+
 import numpy as np
 from loguru import logger
-from sam2.sam2_image_predictor import SAM2ImagePredictor
 from shapely import Polygon, box
-from ultralytics import YOLO
 
 from osm_ai_helper.utils.coordinates import (
     TILE_SIZE,
     lat_lon_to_tile_col_row,
     lat_lon_to_pixel_col_row,
+    pixel_col_row_to_meters_col_row,
+    meters_col_row_to_lat_lon,
 )
+from osm_ai_helper.utils.osm import get_area
 from osm_ai_helper.utils.tiles import download_tile
+
+if TYPE_CHECKING:
+    from sam2.sam2_image_predictor import SAM2ImagePredictor
+    from ultralytics import YOLO
+
+
+def split_area_into_lat_lon_centers(
+    area_name: str, zoom: int, margin: int
+) -> list[tuple[float, float]]:
+    """
+    Split the bounding box of `area_name` into a list of lat lon centers.
+
+    If you iterate on the returned list using [run_inference][osm_ai_helper.run_inference.run_inference],
+    you will cover the entire area.
+
+    Args:
+        area_name (str): Name of the area to split.
+        zoom (int): value to be used in [run_inference][osm_ai_helper.run_inference.run_inference].
+        margin (int): value to be used in [run_inference][osm_ai_helper.run_inference.run_inference].
+
+    Returns:
+        list[tuple[float, float]]: List of lat lon centers.
+    """
+    area = get_area(area_name)[0]
+    south, north, west, east = area["boundingbox"]
+    left, bottom = lat_lon_to_tile_col_row(float(south), float(west), zoom)
+    right, top = lat_lon_to_tile_col_row(float(north), float(east), zoom)
+    lat_lon_centers = []
+    for col in range(left + margin, right + 1, (margin * 2) + 1):
+        for row in range(top + margin, bottom + 1, (margin * 2) + 1):
+            pixel_col_center = (col * 512) + 256
+            pixel_row_center = (row * 512) + 256
+            meters_col_center, meters_row_center = pixel_col_row_to_meters_col_row(
+                pixel_col_center, pixel_row_center, zoom
+            )
+            lat_lon_center = meters_col_row_to_lat_lon(
+                meters_col_center, meters_row_center
+            )
+            lat_lon_centers.append(lat_lon_center)
+    return lat_lon_centers
 
 
 def grouped_elements_to_mask(group, zoom, tile_col, tile_row):
+    import cv2
+
     left_pixel = tile_col * TILE_SIZE
     top_pixel = tile_row * TILE_SIZE
     mask = np.zeros((TILE_SIZE, TILE_SIZE), dtype=np.uint8)
@@ -106,8 +150,8 @@ def yield_tile_corners(stacked_image: np.ndarray, tile_size: int, overlap: float
 
 
 def tile_prediction(
-    bbox_predictor: YOLO,
-    sam_predictor: SAM2ImagePredictor,
+    bbox_predictor: "YOLO",
+    sam_predictor: "SAM2ImagePredictor",
     image: np.ndarray,
     overlap: float = 0.125,
     bbox_conf: float = 0.5,
