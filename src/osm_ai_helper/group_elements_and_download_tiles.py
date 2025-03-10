@@ -1,4 +1,6 @@
 import json
+from concurrent.futures import as_completed
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from fire import Fire
@@ -35,27 +37,32 @@ def group_elements_and_download_tiles(
     logger.info("Grouping elements by tile")
     grouped = group_elements_by_tile(elements, zoom)
 
-    total = len(grouped)
-    n = 0
-    logger.info("Downloading tiles and writing annotation")
+    download_tile_inputs = []
+    annotation_names = []
     for (tile_col, tile_row), group in grouped.items():
-        if n % 50 == 0:
-            logger.info(f"Processed {n}/{total} tiles")
-        n += 1
         output_name = f"{zoom}_{tile_col}_{tile_row}"
-        image_name = f"{output_path / output_name}.jpg"
-        annotation_name = f"{output_path / output_name}.json"
-        if not Path(image_name).exists():
-            image = download_tile(zoom, tile_col, tile_row, mapbox_token)
-            image.save(image_name)
-        if not Path(annotation_name).exists():
-            Path(annotation_name).write_text(
-                json.dumps(
-                    {
-                        "elements": group,
-                    }
-                )
+        download_tile_inputs.append(
+            (zoom, tile_col, tile_row, mapbox_token, f"{output_path / output_name}.jpg")
+        )
+        annotation_names.append(f"{output_path / output_name}.json")
+
+    logger.info(f"Downloading tiles to {output_path}")
+    with ThreadPoolExecutor() as executor:
+        futures = [
+            executor.submit(download_tile, *inputs) for inputs in download_tile_inputs
+        ]
+        for future in as_completed(futures):
+            future.result()
+
+    logger.info(f"Saving annotations to {output_path}")
+    for annotation_name in annotation_names:
+        Path(annotation_name).write_text(
+            json.dumps(
+                {
+                    "elements": group,
+                }
             )
+        )
 
 
 if __name__ == "__main__":

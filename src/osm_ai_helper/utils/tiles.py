@@ -4,10 +4,11 @@ from typing import Dict, List
 
 import numpy as np
 import requests
-
 from PIL import Image
 
 from osm_ai_helper.utils.coordinates import TILE_SIZE, lat_lon_to_pixel_col_row
+
+MAPBOX_TILES_API = "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles"
 
 
 def group_elements_by_tile(elements: List[Dict], zoom: int) -> dict[tuple, list[dict]]:
@@ -40,9 +41,14 @@ def group_elements_by_tile(elements: List[Dict], zoom: int) -> dict[tuple, list[
     return grouped
 
 
-def download_tile(zoom, tile_col, tile_row, token):
-    MAPBOX = "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles"
+def download_tile(
+    zoom: int, tile_col: int, tile_row: int, token: str, output_file: str | None = None
+) -> None | Image.Image:
     response = requests.get(
-        f"{MAPBOX}/{zoom}/{tile_col}/{tile_row}?access_token={token}"
+        f"{MAPBOX_TILES_API}/{zoom}/{tile_col}/{tile_row}?access_token={token}"
     )
-    return Image.open(BytesIO(response.content))
+    if output_file:
+        with open(output_file, "wb") as f:
+            f.write(response.content)
+    else:
+        return Image.open(BytesIO(response.content))
