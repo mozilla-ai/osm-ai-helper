@@ -5,7 +5,7 @@ accounts you need to set up.
 
 ## `MAPBOX_TOKEN`
 
-Used to download the satellite images when [creating a dataset](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/create_dataset.ipynb) and/or [running inference](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference.ipynb).
+Used to download the satellite images when [creating a dataset](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/create_dataset.ipynb) and/or [running inference](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference_point.ipynb).
 
 You need to:
 
@@ -14,7 +14,7 @@ You need to:
 
 ## `OSM_CLIENT_ID` and `OSM_CLIENT_SECRET`
 
-Used to upload the results after [running inference](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference.ipynb) to the OpenStreetMap database.
+Used to upload the results after [running inference](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference_point.ipynb) to the OpenStreetMap database.
 
 You need to:
 

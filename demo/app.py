@@ -97,7 +97,7 @@ def upload_results(output_path):
         "The results will be uploaded using the [osm-ai-helper](https://www.openstreetmap.org/user/osm-ai-helper) profile."
     )
     st.markdown(
-        "You can check the [Colab Notebook](ttps://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference.ipynb)"
+        "You can check the [Colab Notebook](ttps://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference_point.ipynb)"
         " and the [Authorization Guide](https://mozilla-ai.github.io/osm-ai-helper/authorization)"
         " to contribute with your own OpenStreetMap account."
     )

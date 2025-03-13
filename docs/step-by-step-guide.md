@@ -7,7 +7,7 @@ We provide tools and example notebooks to:
 - [Creating a custom dataset using ground truth data from OpenStreetMap](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/create_dataset.ipynb)
 - [Finetuning a YOLO detector using the custom dataset](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/finetune_model.ipynb)
 
-Once you have a trained model, you can [Run Inference](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference.ipynb) in order to find the type of elements you used to train the model (in the example, we chose swimming pools).
+Once you have a trained model, you can [Run Inference](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference_point.ipynb) in order to find the type of elements you used to train the model (in the example, we chose swimming pools).
 
 ## **Overview**
 

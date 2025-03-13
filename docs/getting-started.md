@@ -8,7 +8,7 @@ Get started with OpenStreetMap AI Helper using one of the options below:
 
     | Find Swimming Pools |
     | ------------------- |
-    | [![Run Inference](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference.ipynb)
+    | [![Run Inference](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference_point.ipynb)
 
     You can also create your own dataset and finetune a new model for a different use case:
 
