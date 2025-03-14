@@ -9,23 +9,28 @@
   </picture>
 </p>
 
-# OSM-AI-helper: a Blueprint by Mozilla.ai for mapping Features in OpenStreetMap with Computer Vision
+<div align="center">
 
-[![](https://dcbadge.limes.pink/api/server/YuMNeuKStr?style=flat)](https://discord.gg/YuMNeuKStr)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+[![Ultralytics](https://img.shields.io/badge/Ultralytics-008080?logo=ultralytics&logoColor=white)](https://ultralytics.com/)
+[![SAM 2](https://img.shields.io/badge/SAM%202-0099FF?logo=meta&logoColor=white)](https://segment-anything.com/)
+[![](https://dcbadge.limes.pink/api/server/YuMNeuKStr?style=flat)](https://discord.gg/YuMNeuKStr) <br>
 [![Docs](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/docs.yaml/badge.svg)](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/docs.yaml/)
 [![Tests](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/tests.yaml/badge.svg)](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/tests.yaml/)
 [![Ruff](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/lint.yaml/badge.svg?label=Ruff)](https://github.com/mozilla-ai/osm-ai-helper/actions/workflows/lint.yaml/)
 
-<img src="./images/osm-ai-helper-diagram.png" width="800" alt="osm-ai-helper Diagram" />
+[Blueprints Hub](https://developer-hub.mozilla.ai/)
+| [Documentation](https://mozilla-ai.github.io/osm-ai-helper/)
+| [Getting Started](https://mozilla-ai.github.io/osm-ai-helper/getting-started)
+| [Contributing](CONTRIBUTING.md)
 
-📘 To explore this project further and discover other Blueprints, visit the [**Blueprints Hub**](https://developer-hub.mozilla.ai/).
+</div>
 
-👉 📖 For more detailed guidance on using this project, please visit our [**Docs here**](https://mozilla-ai.github.io/osm-ai-helper/)
 
-### Built with
+# OSM-AI-helper: a Blueprint by Mozilla.ai for mapping Features in OpenStreetMap with Computer Vision
+This Blueprint helps you use object detection and image segmentation models to identify and map features in OpenStreetMap.
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue) [![Ultralytics](https://img.shields.io/badge/Ultralytics-008080?logo=ultralytics&logoColor=white)](https://ultralytics.com/) [![SAM 2](https://img.shields.io/badge/SAM%202-0099FF?logo=meta&logoColor=white)](https://segment-anything.com/)
-
+<img src="./images/osm-ai-helper-diagram.png" width="800" alt="OSM-AI-helper Diagram" />
 
 ## Quick-start
 
