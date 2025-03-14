@@ -208,7 +208,7 @@ def tile_prediction(
     overlap: float = 0.125,
     bbox_conf: float = 0.5,
     bbox_pad: int = 0,
-    batch_size: int = 16,
+    batch_size: int = 32,
 ) -> np.ndarray:
     """
     Predict on a large image by splitting it into tiles.
@@ -226,7 +226,7 @@ def tile_prediction(
         bbox_pad (int): Padding to be added to the predicted bbox.
             Defaults to 0.
         batch_size (int): Batch size for prediction.
-            Defaults to 16.
+            Defaults to 32.
 
     Returns:
         np.ndarray: Stacked output.
@@ -236,7 +236,7 @@ def tile_prediction(
     tile_coords_batch = []
 
     for top, left, bottom, right in yield_tile_corners(image, TILE_SIZE, overlap):
-        logger.debug(f"Processing tile corners: {(top, left, bottom, right)}")
+        logger.debug(f"Tile corners: {(top, left, bottom, right)}")
         tile_batch.append(image[left:right, top:bottom].copy())
         tile_coords_batch.append((top, left, bottom, right))
 
@@ -261,6 +261,7 @@ def tile_prediction(
             sam_predictor,
             bbox_conf,
             bbox_pad,
+            stacked_output,
         )
 
     return stacked_output

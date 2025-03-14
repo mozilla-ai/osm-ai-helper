@@ -40,6 +40,7 @@ def run_inference(
     zoom: int = 18,
     save_full_images: bool = True,
     bbox_conf: float = 0.5,
+    batch_size: int = 32,
 ):
     """
     Run inference on a given location.
@@ -62,6 +63,8 @@ def run_inference(
             See https://docs.mapbox.com/help/glossary/zoom-level/.
         bbox_conf (float): Sets the minimum confidence threshold for detections.
             Defaults to 0.4.
+        batch_size (int): Batch size for prediction.
+            Defaults to 32.
     """
     bbox_predictor = YOLO(yolo_model_file)
     sam_predictor = SAM2ImagePredictor.from_pretrained(
@@ -89,7 +92,11 @@ def run_inference(
     logger.info("Predicting on stacked image")
     # Change to BGR for inference
     stacked_output = tile_prediction(
-        bbox_predictor, sam_predictor, stacked_image[:, :, ::-1], bbox_conf=bbox_conf
+        bbox_predictor,
+        sam_predictor,
+        stacked_image[:, :, ::-1],
+        bbox_conf=bbox_conf,
+        batch_size=batch_size,
     )
 
     logger.info("Finding existing, new and missed polygons")
