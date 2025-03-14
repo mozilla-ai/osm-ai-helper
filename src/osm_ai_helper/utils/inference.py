@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -112,23 +113,33 @@ def download_stacked_image_and_mask(
         ((right - left) * TILE_SIZE, (bottom - top) * TILE_SIZE), dtype=np.uint8
     )
 
-    for n_col, tile_col in enumerate(range(left, right)):
-        for n_row, tile_row in enumerate(range(top, bottom)):
-            group = grouped_elements[(tile_col, tile_row)]
+    with ThreadPoolExecutor() as executor:
+        futures = {}
+        for n_col, tile_col in enumerate(range(left, right)):
+            for n_row, tile_row in enumerate(range(top, bottom)):
+                group = grouped_elements[(tile_col, tile_row)]
+                future = executor.submit(
+                    download_tile, zoom, tile_col, tile_row, mapbox_token
+                )
+                futures[(n_row, n_col)] = future
 
-            img = download_tile(zoom, tile_col, tile_row, mapbox_token)
+        for n_col, tile_col in enumerate(range(left, right)):
+            for n_row, tile_row in enumerate(range(top, bottom)):
+                group = grouped_elements[(tile_col, tile_row)]
 
-            mask = grouped_elements_to_mask(group, zoom, tile_col, tile_row)
+                img = futures[(n_row, n_col)].result()
 
-            stacked_image[
-                n_row * TILE_SIZE : (n_row + 1) * TILE_SIZE,
-                n_col * TILE_SIZE : (n_col + 1) * TILE_SIZE,
-            ] = np.array(img)
+                mask = grouped_elements_to_mask(group, zoom, tile_col, tile_row)
 
-            stacked_mask[
-                n_row * TILE_SIZE : (n_row + 1) * TILE_SIZE,
-                n_col * TILE_SIZE : (n_col + 1) * TILE_SIZE,
-            ] = mask
+                stacked_image[
+                    n_row * TILE_SIZE : (n_row + 1) * TILE_SIZE,
+                    n_col * TILE_SIZE : (n_col + 1) * TILE_SIZE,
+                ] = np.array(img)
+
+                stacked_mask[
+                    n_row * TILE_SIZE : (n_row + 1) * TILE_SIZE,
+                    n_col * TILE_SIZE : (n_col + 1) * TILE_SIZE,
+                ] = mask
 
     return stacked_image, stacked_mask
 
