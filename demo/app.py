@@ -43,7 +43,7 @@ def show_map():
 
 
 @st.fragment
-def inference(lat_lon, margin):
+def inference(lat_lon):
     with st.spinner("Downloading model..."):
         hf_hub_download(
             "mozilla-ai/swimming-pool-detector",
@@ -56,8 +56,9 @@ def inference(lat_lon, margin):
             yolo_model_file="models/model.pt",
             output_dir="/tmp/results",
             lat_lon=lat_lon,
-            margin=margin,
+            margin=2,
             save_full_images=False,
+            batch_size=64,
         )
     return output_path, existing, new
 
@@ -152,7 +153,7 @@ lat_lon = st.text_input("Paste the copied (latitude, longitude)")
 if st.button("Run Inference") and lat_lon:
     lat, lon = lat_lon.split(",")
     output_path, existing, new = inference(
-        lat_lon=(float(lat.strip()), float(lon.strip())), margin=2
+        lat_lon=(float(lat.strip()), float(lon.strip()))
     )
 
     st.info(f"Found {len(existing)} swimming pools already in OpenStreetMaps.")
