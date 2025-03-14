@@ -160,6 +160,47 @@ def yield_tile_corners(stacked_image: np.ndarray, tile_size: int, overlap: float
             yield top, left, bottom, right
 
 
+def predict_tile_batch(
+    tile_batch,
+    tile_coords_batch,
+    bbox_predictor,
+    sam_predictor,
+    bbox_conf,
+    bbox_pad,
+    stacked_output,
+):
+    logger.debug(f"Predicting batch of {len(tile_batch)} tiles.")
+    bbox_results_batch = bbox_predictor.predict(
+        tile_batch, conf=bbox_conf, verbose=False
+    )
+
+    for tile_index, bbox_result in enumerate(bbox_results_batch):
+        top, left, bottom, right = tile_coords_batch[tile_index]
+
+        if len(bbox_result.boxes) == 0:
+            continue
+
+        sam_predictor.set_image(tile_batch[tile_index])
+
+        for bbox in bbox_result:
+            bbox_int = list(int(x) for x in bbox.boxes.xyxy[0])
+
+            if bbox_pad > 0:
+                bbox_int[0] = max(0, bbox_int[0] - bbox_pad)
+                bbox_int[1] = max(0, bbox_int[1] - bbox_pad)
+                bbox_int[2] = min(512, bbox_int[2] + bbox_pad)
+                bbox_int[3] = min(512, bbox_int[3] + bbox_pad)
+
+            masks, *_ = sam_predictor.predict(
+                box=[bbox_int],
+                multimask_output=False,
+            )
+
+            stacked_output[left:right, top:bottom] += masks[0].astype(np.uint8)
+
+    return stacked_output
+
+
 def tile_prediction(
     bbox_predictor: "YOLO",
     sam_predictor: "SAM2ImagePredictor",
@@ -167,6 +208,7 @@ def tile_prediction(
     overlap: float = 0.125,
     bbox_conf: float = 0.5,
     bbox_pad: int = 0,
+    batch_size: int = 16,
 ) -> np.ndarray:
     """
     Predict on a large image by splitting it into tiles.
@@ -183,37 +225,42 @@ def tile_prediction(
             Defaults to 0.4.
         bbox_pad (int): Padding to be added to the predicted bbox.
             Defaults to 0.
+        batch_size (int): Batch size for prediction.
+            Defaults to 16.
 
     Returns:
         np.ndarray: Stacked output.
     """
     stacked_output = np.zeros((image.shape[0], image.shape[1]), dtype=np.uint8)
+    tile_batch = []
+    tile_coords_batch = []
+
     for top, left, bottom, right in yield_tile_corners(image, TILE_SIZE, overlap):
-        logger.debug(f"Predicting {(top, left, bottom, right)}")
-        tile_image = image[left:right, top:bottom].copy()
-        sam_predictor.set_image(tile_image)
+        logger.debug(f"Processing tile corners: {(top, left, bottom, right)}")
+        tile_batch.append(image[left:right, top:bottom].copy())
+        tile_coords_batch.append((top, left, bottom, right))
 
-        bbox_result = bbox_predictor.predict(tile_image, conf=bbox_conf, verbose=False)
-
-        for bbox in bbox_result:
-            if len(bbox.boxes.xyxy) == 0:
-                continue
-
-            bbox_int = list(int(x) for x in bbox.boxes.xyxy[0])
-
-            if bbox_pad > 0:
-                bbox_int[0] = max(0, bbox_int[0] - bbox_pad)
-                bbox_int[1] = max(0, bbox_int[1] - bbox_pad)
-                bbox_int[2] = min(512, bbox_int[2] + bbox_pad)
-                bbox_int[3] = min(512, bbox_int[3] + bbox_pad)
-
-            masks, *_ = sam_predictor.predict(
-                box=[bbox_int],
-                multimask_output=False,
+        if len(tile_batch) >= batch_size:
+            stacked_output = predict_tile_batch(
+                tile_batch,
+                tile_coords_batch,
+                bbox_predictor,
+                sam_predictor,
+                bbox_conf,
+                bbox_pad,
+                stacked_output,
             )
+            tile_batch = []
+            tile_coords_batch = []
 
-            stacked_output[left:right, top:bottom] += masks[0].astype(np.uint8)
-
-    stacked_output[stacked_output != 0] = 255
+    if tile_batch:
+        stacked_output = predict_tile_batch(
+            tile_batch,
+            tile_coords_batch,
+            bbox_predictor,
+            sam_predictor,
+            bbox_conf,
+            bbox_pad,
+        )
 
     return stacked_output
