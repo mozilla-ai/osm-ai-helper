@@ -8,7 +8,7 @@
 
 ::: osm_ai_helper.run_inference
 
-::: osm_ai_helper.upload_osm
+::: osm_ai_helper.export_osm
 
 ::: osm_ai_helper.utils.inference
 
