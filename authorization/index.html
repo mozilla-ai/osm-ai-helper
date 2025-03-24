@@ -371,15 +371,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#osm_client_id-and-osm_client_secret" class="md-nav__link">
-    <span class="md-ellipsis">
-      OSM_CLIENT_ID and OSM_CLIENT_SECRET
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#hf_token" class="md-nav__link">
     <span class="md-ellipsis">
       HF_TOKEN
@@ -495,15 +486,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#osm_client_id-and-osm_client_secret" class="md-nav__link">
-    <span class="md-ellipsis">
-      OSM_CLIENT_ID and OSM_CLIENT_SECRET
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#hf_token" class="md-nav__link">
     <span class="md-ellipsis">
       HF_TOKEN
@@ -540,16 +522,6 @@ accounts you need to set up.</p>
 <ul>
 <li>Create an account: https://console.mapbox.com/</li>
 <li>Follow this guide to obtain your <a href="https://docs.mapbox.com/help/getting-started/access-tokens/#your-default-public-token">Default Public Token</a>.</li>
-</ul>
-<h2 id="osm_client_id-and-osm_client_secret"><code>OSM_CLIENT_ID</code> and <code>OSM_CLIENT_SECRET</code></h2>
-<p>Used to upload the results after <a href="https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference_point.ipynb">running inference</a> to the OpenStreetMap database.</p>
-<p>You need to:</p>
-<ul>
-<li>Create an account: https://www.openstreetmap.org/user/new</li>
-<li>Register a new OAuth2 application: https://www.openstreetmap.org/oauth2/applications/new
-    Grant <code>Modify the map (write_api)</code>.
-    Set the redirect URL to <code>https://127.0.0.1:8000</code>.</li>
-<li>Copy and save the <code>Client ID</code> and <code>Client Secret</code>.</li>
 </ul>
 <h2 id="hf_token"><code>HF_TOKEN</code></h2>
 <p>Only needed if you are <a href="https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/create_dataset.ipynb">Creating a Dataset</a> and/or <a href="https://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/finetune_model.ipynb">Finetuning a Model</a> in order to upload the results to the <a href="https://huggingface.co/docs/hub/index">HuggingFace Hub</a>.</p>

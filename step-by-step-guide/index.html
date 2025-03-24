@@ -377,9 +377,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-review-filter-and-upload-the-new-polygons-to-openstreetmap" class="md-nav__link">
+  <a href="#step-4-review-filter-and-export-the-new-polygons" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 4: Review, filter and upload the new polygons to OpenStreetMap
+      Step 4: Review, filter and export the new polygons
     </span>
   </a>
   
@@ -558,9 +558,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-review-filter-and-upload-the-new-polygons-to-openstreetmap" class="md-nav__link">
+  <a href="#step-4-review-filter-and-export-the-new-polygons" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 4: Review, filter and upload the new polygons to OpenStreetMap
+      Step 4: Review, filter and export the new polygons
     </span>
   </a>
   
@@ -630,15 +630,16 @@
 <p>Based on overlap, all the polygons are categorized into <code>existing</code> (green), <code>new</code> (yellow) or <code>missed</code> (red).
 The really relevant ones are the <code>new</code> (yellow), the others just serve as reference on how the model behaves
 for polygons already existing in OpenStreetMap.</p>
-<h2 id="step-4-review-filter-and-upload-the-new-polygons-to-openstreetmap"><strong>Step 4: Review, filter and upload the <code>new</code> polygons to OpenStreetMap</strong></h2>
+<h2 id="step-4-review-filter-and-export-the-new-polygons"><strong>Step 4: Review, filter and export the <code>new</code> polygons</strong></h2>
 <p>The <code>new</code> polygons can be manually reviewed and filtered:</p>
 <p><img alt="Filter Polygons" src="../images/filter-polygons.png" /></p>
-<p>The ones you chose to <code>keep</code> will be uploaded to OpenStreetMap using <a href="../api/#osm_ai_helper.upload_osm.upload_osm"><code>upload_osm</code></a>.</p>
+<p>The ones you chose to <code>keep</code> will be exportedin <a href="https://wiki.openstreetmap.org/wiki/OsmChange">OsmChange</a> format.</p>
+<p>You can then import the file in <a href="https://wiki.openstreetmap.org/wiki/OsmChange#Editors">any of the supported editors</a> format.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Once uploaded, the changes will be added to OpenStreetMap, so ensure you're confident about the ones you've kept.</p>
+<p>Make sure to carefully review and edit any predicted polygon.</p>
 </div>
-<p><img alt="Polygon Uploaded" src="../images/polygon-uploaded.png" /></p>
+<p><img alt="Exported Polygons" src="../images/polygon-exported.png" /></p>
 <h2 id="customizing-the-blueprint">🎨 <strong>Customizing the Blueprint</strong></h2>
 <p>To better understand how you can tailor this Blueprint to suit your specific needs, please visit the <strong><a href="../customization/">Customization Guide</a></strong>.</p>
 <h2 id="contributing-to-the-blueprint">🤝 <strong>Contributing to the Blueprint</strong></h2>
