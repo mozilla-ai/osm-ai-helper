@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 from shutil import move
 
@@ -11,7 +10,7 @@ from PIL import Image
 from streamlit_folium import st_folium
 
 from osm_ai_helper.run_inference import run_inference
-from osm_ai_helper.upload_osm import upload_osm
+from osm_ai_helper.export_osm import convert_polygons
 
 
 @st.fragment
@@ -90,34 +89,25 @@ def handle_polygon(polygon):
 
 
 @st.fragment
-def upload_results(output_path):
+def download_results(output_path):
     st.divider()
-    st.header("Upload all polygons in `keep`")
+    st.header("Export Results")
 
     st.markdown(
-        "The results will be uploaded using the [osm-ai-helper](https://www.openstreetmap.org/user/osm-ai-helper) profile."
+        "The results will be exported in [OsmChange](https://wiki.openstreetmap.org/wiki/OsmChange) format."
+        "\nYou can then import the file in [any of the supported editors](https://wiki.openstreetmap.org/wiki/OsmChange#Editors) format."
     )
-    st.markdown(
-        "You can check the [Colab Notebook](ttps://colab.research.google.com/github/mozilla-ai/osm-ai-helper/blob/main/demo/run_inference_point.ipynb)"
-        " and the [Authorization Guide](https://mozilla-ai.github.io/osm-ai-helper/authorization)"
-        " to contribute with your own OpenStreetMap account."
-    )
-    contributor = st.text_input("(Optional) Indicate your name for attribution")
-    if st.button("Upload all polygons in `keep`"):
-        if contributor:
-            comment = f"Add Swimming Pools. Contributed by {contributor}"
-        else:
-            comment = "Add Swimming Pools"
 
-        changeset = upload_osm(
-            results_dir=output_path / "keep",
-            client_id=os.environ["OSM_CLIENT_ID"],
-            client_secret=os.environ["OSM_CLIENT_SECRET"],
-            comment=comment,
-        )
-        st.success(
-            f"Changeset created: https://www.openstreetmap.org/changeset/{changeset}"
-        )
+    changeset = convert_polygons(
+        results_dir=output_path / "keep",
+        tags={"leisure": "swimming_pool", "access": "private", "location": "outdoor"},
+    )
+    st.download_button(
+        label="Download all polygons in `keep`",
+        data=changeset,
+        file_name="exported_results.osc",
+        mime="type/xml",
+    )
 
 
 st.title("OpenStreetMap AI Helper")
@@ -171,6 +161,6 @@ if st.button("Run Inference") and lat_lon:
         for new in Path(output_path).glob("*.json"):
             handle_polygon(new)
 
-        upload_results(output_path)
+        download_results(output_path)
     else:
         st.warning("No `new` swimming pools were found. Try a different location.")

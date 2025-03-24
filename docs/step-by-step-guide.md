@@ -46,19 +46,19 @@ Based on overlap, all the polygons are categorized into `existing` (green), `new
 The really relevant ones are the `new` (yellow), the others just serve as reference on how the model behaves
 for polygons already existing in OpenStreetMap.
 
-## **Step 4: Review, filter and upload the `new` polygons to OpenStreetMap**
+## **Step 4: Review, filter and export the `new` polygons**
 
 The `new` polygons can be manually reviewed and filtered:
 
 ![Filter Polygons](./images/filter-polygons.png)
 
-The ones you chose to `keep` will be uploaded to OpenStreetMap using [`upload_osm`](api.md/#osm_ai_helper.upload_osm.upload_osm).
+The ones you chose to `keep` will be exportedin [OsmChange](https://wiki.openstreetmap.org/wiki/OsmChange) format.
+
+You can then import the file in [any of the supported editors](https://wiki.openstreetmap.org/wiki/OsmChange#Editors) format.
 
 !!! warning
 
-    Once uploaded, the changes will be added to OpenStreetMap, so ensure you're confident about the ones you've kept.
-
-![Polygon Uploaded](./images/polygon-uploaded.png)
+    Make sure to carefully review and edit any predicted polygon.
 
 ## 🎨 **Customizing the Blueprint**
 
