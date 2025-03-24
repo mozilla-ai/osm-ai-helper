@@ -60,6 +60,8 @@ You can then import the file in [any of the supported editors](https://wiki.open
 
     Make sure to carefully review and edit any predicted polygon.
 
+![Exported Polygons](./images/polygon-exported.png)
+
 ## 🎨 **Customizing the Blueprint**
 
 To better understand how you can tailor this Blueprint to suit your specific needs, please visit the **[Customization Guide](customization.md)**.
