@@ -44,8 +44,8 @@ def split_area_into_lat_lon_centers(
     lat_lon_centers = []
     for col in range(left + margin, right + 1, (margin * 2) + 1):
         for row in range(top + margin, bottom + 1, (margin * 2) + 1):
-            pixel_col_center = (col * 512) + 256
-            pixel_row_center = (row * 512) + 256
+            pixel_col_center = (col * TILE_SIZE) + TILE_SIZE / 2
+            pixel_row_center = (row * TILE_SIZE) + TILE_SIZE / 2
             meters_col_center, meters_row_center = pixel_col_row_to_meters_col_row(
                 pixel_col_center, pixel_row_center, zoom
             )
@@ -188,8 +188,8 @@ def predict_tile_batch(
             if bbox_pad > 0:
                 bbox_int[0] = max(0, bbox_int[0] - bbox_pad)
                 bbox_int[1] = max(0, bbox_int[1] - bbox_pad)
-                bbox_int[2] = min(512, bbox_int[2] + bbox_pad)
-                bbox_int[3] = min(512, bbox_int[3] + bbox_pad)
+                bbox_int[2] = min(TILE_SIZE, bbox_int[2] + bbox_pad)
+                bbox_int[3] = min(TILE_SIZE, bbox_int[3] + bbox_pad)
 
             masks, *_ = sam_predictor.predict(
                 box=[bbox_int],
