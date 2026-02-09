@@ -73,8 +73,7 @@ def handle_polygon(polygon):
 
     col1, col2 = st.columns(2)
 
-    with col1:
-        st.image(raw_image, caption="Raw Image", width='stretch')
+    with col1:         st.image(raw_image, caption="Raw Image", width='stretch')
     with col2:
         st.image(painted_image, caption="Painted Image", width='stretch')
 
