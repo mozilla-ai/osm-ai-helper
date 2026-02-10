@@ -38,7 +38,7 @@ def pixel_col_row_to_meters_col_row(pixel_col, pixel_row, zoom):
     if pixel_col < half_size:
         meter_col *= -1
     if pixel_row > half_size:
-        meter_col *= -1
+        meter_row *= -1
     return meter_col, meter_row
 
 
