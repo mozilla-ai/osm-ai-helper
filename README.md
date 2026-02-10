@@ -54,3 +54,15 @@ This project is licensed under the AGPL-3.0 License. See the [LICENSE](LICENSE) 
 ## Contributing
 
 Contributions are welcome! To get started, you can check out the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+## Scope and uses
+
+This blueprint is a high level guide to feature extraction and preparation of data in OpenStreetMap compatible formats; designed to improve the accessibility of computer vision tooling to mapping users and document potential processes.
+
+It is your responsibility to ensure the following prior to any data additions, as a minimum:
+
+* Adequately document the limitations of your model(s)
+* Have performed significant QA and validated the changes are at or above what a typical human mapper would generate
+* Are fully aware of [Import Guidelines](https://wiki.openstreetmap.org/wiki/Import/Guidelines)
+* Have a plan for granular human-in-the-loop verification, for example use of the [Rapid editor](https://rapideditor.org/) or a [MapRoulette](https://maproulette.org/) challenge.
+* Have community buy in
