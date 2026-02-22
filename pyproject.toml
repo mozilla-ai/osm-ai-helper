@@ -15,7 +15,7 @@ dependencies = [
   "requests",
   "requests_oauthlib",
   "sam2",
-  "setuptools==75.8.2",
+  "setuptools==78.1.1",
   "scikit-image",
   "shapely",
   "ultralytics"
